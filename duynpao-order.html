@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUYNPAO - Đặt bánh bao</title>
+<style>
+  :root{
+    --accent:#c0392b; --accent-dark:#8e2a1f; --bg:#faf6f1; --card:#ffffff;
+    --text:#2b2320; --muted:#8a7d75; --border:#e7ddd3; --green:#2e7d32; --amber:#b26a00;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--text);}
+  .wrap{max-width:480px;margin:0 auto;padding:16px 16px 100px;}
+  header{text-align:center;padding:18px 0 12px;}
+  header h1{margin:0;font-size:20px;font-weight:700;color:var(--accent-dark);}
+  header p{margin:4px 0 0;font-size:13px;color:var(--muted);}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .cat{font-size:13px;font-weight:700;color:var(--accent-dark);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.3px;}
+  .item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;}
+  .item .name{font-size:14.5px;font-weight:600;}
+  .item .price{font-size:12.5px;color:var(--muted);margin-top:2px;}
+  .qty{display:flex;align-items:center;gap:8px;}
+  .qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:#fff;font-size:16px;line-height:1;cursor:pointer;color:var(--accent-dark);}
+  .qty span{min-width:18px;text-align:center;font-weight:600;font-size:14px;}
+  select, input[type=text], input[type=tel]{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);font-size:14px;background:#fff;color:var(--text);}
+  label.field{display:block;font-size:13px;font-weight:600;margin:10px 0 6px;}
+  .radio-row{display:flex;gap:10px;margin-bottom:8px;}
+  .radio-opt{flex:1;border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center;font-size:13px;cursor:pointer;}
+  .radio-opt.active{border-color:var(--accent);background:#fdf1ee;color:var(--accent-dark);font-weight:600;}
+  .note{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.5;}
+  .summary-row{display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;}
+  .summary-row.total{font-size:16px;font-weight:700;border-top:1px solid var(--border);margin-top:6px;padding-top:10px;}
+  .badge{display:inline-block;font-size:12px;padding:3px 9px;border-radius:20px;font-weight:600;}
+  .badge.green{background:#e8f5e9;color:var(--green);}
+  .badge.amber{background:#fff3e0;color:var(--amber);}
+  .payment-box{border:1px dashed var(--accent);border-radius:10px;padding:12px;margin-top:10px;background:#fdf5f3;font-size:13px;}
+  .footer-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:12px 16px;max-width:480px;margin:0 auto;}
+  .btn{display:block;width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;}
+  .btn:active{background:var(--accent-dark);}
+  .err{color:#c0392b;font-size:12.5px;margin-top:4px;display:none;}
+  textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13px;font-family:inherit;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>DUYNPAO</h1>
+    <p>Cơ sở sản xuất bánh bao tươi &middot; Yên Mô, Ninh Bình</p>
+  </header>
+
+  <div id="menu"></div>
+
+  <div class="card">
+    <label class="field">Nhận hàng</label>
+    <div class="radio-row">
+      <div class="radio-opt active" data-mode="pickup" onclick="setMode('pickup')">Đến lấy tại điểm bán</div>
+      <div class="radio-opt" data-mode="delivery" onclick="setMode('delivery')">Giao tận nơi</div>
+    </div>
+
+    <div id="pickupBox">
+      <label class="field">Chọn điểm lấy hàng</label>
+      <select id="pickupPoint">
+        <option value="Xưởng sản xuất - Liên Trì, Yên Hoà, Yên Mô">Xưởng sản xuất - Liên Trì, Yên Hoà, Yên Mô</option>
+        <option value="Cổng trường Yên Mô B, Yên Mạc, Yên Mô">Cổng trường Yên Mô B, Yên Mạc, Yên Mô</option>
+        <option value="422 Hải Thượng Lãn Ông, Ninh Bình">422 Hải Thượng Lãn Ông, Ninh Bình</option>
+        <option value="Chợ 5 tầng, Ninh Bình">Chợ 5 tầng, Ninh Bình</option>
+      </select>
+    </div>
+
+    <div id="deliveryBox" style="display:none;">
+      <label class="field">Địa chỉ giao hàng</label>
+      <input type="text" id="address" placeholder="Số nhà, đường, xã/phường">
+      <label class="field">Khoảng cách từ xưởng</label>
+      <select id="distance">
+        <option value="0">Dưới 3km (nội Yên Mô)</option>
+        <option value="1">Trên 3km (nội Ninh Bình)</option>
+      </select>
+      <div class="note">Phí ship 15.000-25.000đ tuỳ khoảng cách thực tế. Miễn phí ship nếu đơn từ 200.000đ và dưới 3km.</div>
+    </div>
+
+    <label class="field">Số điện thoại</label>
+    <input type="tel" id="phone" placeholder="09xxxxxxxx">
+    <div class="err" id="phoneErr">Nhập số điện thoại để shop liên hệ xác nhận đơn.</div>
+  </div>
+
+  <div class="card" id="summaryCard">
+    <div class="summary-row"><span>Tạm tính</span><span id="subtotal">0đ</span></div>
+    <div class="summary-row"><span>Phí ship</span><span id="shipFee">-</span></div>
+    <div class="summary-row total"><span>Tổng cộng</span><span id="grandTotal">0đ</span></div>
+    <div id="shipNote" class="note"></div>
+    <div id="payNote" class="note"></div>
+    <div class="payment-box" id="payBox" style="display:none;">
+      <b>Chuyển khoản trước:</b><br>
+      VPBank &middot; DO THI DUYEN<br>
+      STK: 506482755
+    </div>
+  </div>
+
+  <div class="err" id="cartErr">Chọn ít nhất 1 loại bánh bao trước khi đặt hàng.</div>
+</div>
+
+<div class="footer-bar">
+  <button class="btn" onclick="placeOrder()">Đặt hàng</button>
+</div>
+
+<script>
+const products = [
+  {id:'SP001', name:'Bánh bao thịt 1 trứng', price:40000, unit:'hộp 4 chiếc'},
+  {id:'SP002', name:'Bánh bao đậu dừa', price:40000, unit:'hộp 4 chiếc'},
+  {id:'SP003', name:'Bánh bao xúc xích phomai', price:60000, unit:'hộp 4 chiếc'},
+  {id:'SP004', name:'Bánh bao cốm dừa', price:60000, unit:'hộp 4 chiếc'},
+  {id:'SP005', name:'Bánh bao gà nấm phomai', price:60000, unit:'hộp 4 chiếc'},
+  {id:'SP006', name:'Bánh bao bò ngô phomai', price:60000, unit:'hộp 4 chiếc'},
+  {id:'SP007', name:'Bánh bao xá xíu phomai', price:60000, unit:'hộp 4 chiếc'},
+  {id:'SP008', name:'Bánh bao chay sữa', price:25000, unit:'túi 5 chiếc'},
+  {id:'SP009', name:'Bánh bao chay lứt', price:35000, unit:'túi 5 chiếc'},
+  {id:'SP010', name:'Bánh bao chay cám', price:35000, unit:'túi 5 chiếc'},
+  {id:'SP011', name:'Bánh bao chay sữa cân', price:40000, unit:'túi 500gr'},
+  {id:'SP012', name:'Bánh bao cốm mini', price:100000, unit:'hộp 10 chiếc'},
+  {id:'SP013', name:'Bánh bao thịt mini', price:60000, unit:'hộp 10 chiếc'},
+  {id:'SP014', name:'Bánh bao kimsa', price:100000, unit:'hộp 10 chiếc'},
+  {id:'SP015', name:'Bánh bao thịt 2 trứng', price:60000, unit:'hộp 4 chiếc'},
+];
+
+let cart = {};
+let mode = 'pickup';
+
+function fmt(n){ return n.toLocaleString('vi-VN') + 'đ'; }
+
+function renderMenu(){
+  const el = document.getElementById('menu');
+  let html = '<div class="card"><div class="cat">Menu bánh bao</div>';
+  products.forEach(p=>{
+    html += `<div class="item">
+      <div><div class="name">${p.name}</div><div class="price">${fmt(p.price)} / ${p.unit}</div></div>
+      <div class="qty">
+        <button onclick="changeQty('${p.id}',-1)">-</button>
+        <span id="qty-${p.id}">0</span>
+        <button onclick="changeQty('${p.id}',1)">+</button>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+renderMenu();
+
+function changeQty(id, delta){
+  const cur = cart[id] || 0;
+  const next = Math.max(0, cur + delta);
+  cart[id] = next;
+  document.getElementById('qty-'+id).textContent = next;
+  updateSummary();
+}
+
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('.radio-opt').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.radio-opt[data-mode="${m}"]`).classList.add('active');
+  document.getElementById('pickupBox').style.display = m==='pickup' ? 'block':'none';
+  document.getElementById('deliveryBox').style.display = m==='delivery' ? 'block':'none';
+  updateSummary();
+}
+
+function updateSummary(){
+  let subtotal = 0;
+  Object.keys(cart).forEach(id=>{
+    const p = products.find(x=>x.id===id);
+    subtotal += p.price * (cart[id]||0);
+  });
+  document.getElementById('subtotal').textContent = fmt(subtotal);
+
+  let ship = 0;
+  let shipLabel = '-';
+  let shipNote = '';
+
+  if(mode === 'pickup'){
+    shipLabel = 'Miễn phí (tự lấy)';
+    shipNote = '';
+  } else {
+    const dist = document.getElementById('distance').value;
+    if(subtotal < 100000){
+      shipLabel = 'Chưa nhận ship (đơn dưới 100.000đ)';
+      shipNote = 'Đơn dưới 100.000đ shop chưa hỗ trợ giao tận nơi. Vui lòng chọn đến lấy tại điểm bán hoặc đặt thêm.';
+    } else if(subtotal >= 200000 && dist === '0'){
+      shipLabel = '<span class="badge green">Miễn phí ship</span>';
+      shipNote = 'Đơn từ 200.000đ, dưới 3km nội Yên Mô - miễn phí ship.';
+    } else {
+      ship = dist === '0' ? 15000 : 20000;
+      shipLabel = fmt(ship) + ' (dao động 15.000-25.000đ)';
+      shipNote = 'Phí ship thực tế shop sẽ xác nhận lại theo địa chỉ cụ thể.';
+    }
+  }
+  document.getElementById('shipFee').innerHTML = shipLabel;
+  document.getElementById('shipNote').textContent = shipNote;
+
+  const total = subtotal + ship;
+  document.getElementById('grandTotal').textContent = fmt(total);
+
+  const payBox = document.getElementById('payBox');
+  const payNote = document.getElementById('payNote');
+  if(total > 0 && total < 150000){
+    payNote.textContent = 'Đơn dưới 150.000đ: vui lòng chuyển khoản trước để shop chuẩn bị hàng.';
+    payBox.style.display = 'block';
+  } else if(total >= 150000){
+    payNote.textContent = 'Đơn từ 150.000đ: có thể chuyển khoản trước hoặc thanh toán khi nhận hàng (COD).';
+    payBox.style.display = 'block';
+  } else {
+    payNote.textContent = '';
+    payBox.style.display = 'none';
+  }
+}
+document.getElementById('distance').addEventListener('change', updateSummary);
+updateSummary();
+
+function placeOrder(){
+  const phone = document.getElementById('phone').value.trim();
+  const items = Object.keys(cart).filter(id=>cart[id]>0);
+  document.getElementById('cartErr').style.display = items.length===0 ? 'block':'none';
+  document.getElementById('phoneErr').style.display = phone==='' ? 'block':'none';
+  if(items.length===0 || phone===='') return;
+
+  let lines = ['ĐƠN HÀNG - DUYNPAO'];
+  items.forEach(id=>{
+    const p = products.find(x=>x.id===id);
+    lines.push(`- ${p.name} x${cart[id]} (${fmt(p.price*cart[id])})`);
+  });
+  lines.push('');
+  if(mode==='pickup'){
+    lines.push('Nhận hàng: Đến lấy tại - ' + document.getElementById('pickupPoint').value);
+  } else {
+    lines.push('Nhận hàng: Giao tận nơi - ' + (document.getElementById('address').value || '(chưa nhập địa chỉ)'));
+  }
+  lines.push('Tổng cộng: ' + document.getElementById('grandTotal').textContent);
+  lines.push('SĐT: ' + phone);
+
+  const msg = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'https://zalo.me/0975392409?text=' + msg;
+}
+</script>
+</body>
+</html>
