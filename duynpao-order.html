@@ -220,7 +220,7 @@ function placeOrder(){
   const items = Object.keys(cart).filter(id=>cart[id]>0);
   document.getElementById('cartErr').style.display = items.length===0 ? 'block':'none';
   document.getElementById('phoneErr').style.display = phone==='' ? 'block':'none';
-  if(items.length===0 || phone===='') return;
+  if(items.length===0 || phone==='') return;
 
   let lines = ['ĐƠN HÀNG - DUYNPAO'];
   items.forEach(id=>{
