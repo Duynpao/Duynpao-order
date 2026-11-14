@@ -124,8 +124,12 @@ const products = [
   {id:'SP015', name:'Bánh bao thịt 2 trứng', price:60000, unit:'hộp 4 chiếc'},
 ];
 
+// Dán link Web App của Google Apps Script vào đây (kết thúc bằng /exec).
+const SHEET_URL = '';
+
 let cart = {};
 let mode = 'pickup';
+let currentShip = 0;
 
 function fmt(n){ return n.toLocaleString('vi-VN') + 'đ'; }
 
@@ -196,6 +200,7 @@ function updateSummary(){
   document.getElementById('shipFee').innerHTML = shipLabel;
   document.getElementById('shipNote').textContent = shipNote;
 
+  currentShip = ship;
   const total = subtotal + ship;
   document.getElementById('grandTotal').textContent = fmt(total);
 
@@ -237,7 +242,29 @@ function placeOrder(){
   lines.push('SĐT: ' + phone);
 
   const msg = encodeURIComponent(lines.join('\n'));
-  window.location.href = 'https://zalo.me/0975392409?text=' + msg;
+  const goZalo = () => { window.location.href = 'https://zalo.me/0975392409?text=' + msg; };
+
+  if(!SHEET_URL){ goZalo(); return; }
+
+  const order = {
+    phone: phone,
+    mode: mode,
+    place: mode==='pickup' ? document.getElementById('pickupPoint').value
+                           : (document.getElementById('address').value || ''),
+    ship: mode==='delivery' ? currentShip : 0,
+    items: items.map(id=>({id:id, qty:cart[id]}))
+  };
+  const btn = document.querySelector('.footer-bar .btn');
+  btn.disabled = true; btn.textContent = 'Đang gửi đơn...';
+  let done = false;
+  const finish = () => { if(done) return; done = true; goZalo(); };
+  // Gửi đơn vào Google Sheets; dù lỗi hay chậm vẫn mở Zalo sau tối đa 4 giây.
+  fetch(SHEET_URL, {
+    method:'POST', mode:'no-cors', keepalive:true,
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(order)
+  }).catch(()=>{}).finally(finish);
+  setTimeout(finish, 4000);
 }
 </script>
 </body>
