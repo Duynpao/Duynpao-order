@@ -46,7 +46,7 @@ function doPost(e) {
     if (!items.length) return out({ ok: false, error: 'Chưa chọn bánh' });
 
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const today = Utilities.parseDate(Utilities.formatDate(now, TZ, 'yyyy-MM-dd'), TZ, 'yyyy-MM-dd');
     const orderId = 'LE' + Utilities.formatDate(now, TZ, 'yyMMdd') + '-' +
       String(Math.floor(10000 + Math.random() * 90000));
     const month = Utilities.formatDate(now, TZ, 'yyyy-MM');
