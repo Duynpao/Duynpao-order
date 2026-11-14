@@ -11,7 +11,7 @@ const TZ = 'Asia/Ho_Chi_Minh';
 // unit = 'bánh': quy ra số bánh, đơn giá = giá hộp / số bánh.
 // unit khác: giữ nguyên theo hộp/túi như các đơn lẻ cũ.
 const CATALOG = {
-  SP001: { name: 'Thịt 1 trứng',       price: 40000,  per: 4,  unit: 'bánh' },
+  SP001: { name: 'Thịt 1 trứng',       price: 48000,  per: 4,  unit: 'bánh' },
   SP002: { name: 'Đậu dừa',            price: 40000,  per: 4,  unit: 'bánh' },
   SP003: { name: 'Xúc xích phomai',    price: 60000,  per: 4,  unit: 'bánh' },
   SP004: { name: 'Cốm dừa',            price: 60000,  per: 4,  unit: 'bánh' },
