@@ -93,14 +93,10 @@ function doPost(e) {
     const need = start + rows.length - 1 - sh.getMaxRows();
     if (need > 0) sh.insertRowsAfter(sh.getMaxRows(), need);
 
-    const n = rows.length;
-    // Định dạng trước khi ghi để SĐT giữ số 0 đầu và tháng giữ dạng chữ.
-    sh.getRange(start, 2, n, 1).setNumberFormat('@');
-    sh.getRange(start, 5, n, 1).setNumberFormat('@');
-    sh.getRange(start, 1, n, 1).setNumberFormat('dd/MM/yyyy');
-    sh.getRange(start, 7, n, 1).setNumberFormat('d/m/yyyy');
-    sh.getRange(start, 12, n, 2).setNumberFormat('#,##0"đ"');
-    sh.getRange(start, 1, n, 16).setValues(rows);
+    // Tab "Đơn hàng" là một Bảng (Table) đã định kiểu sẵn từng cột, nên không đổi định dạng ô.
+    // Thêm dấu ' trước tháng và SĐT để Sheets giữ dạng chữ (không mất số 0 đầu).
+    rows.forEach(function (r) { r[1] = "'" + r[1]; r[4] = "'" + r[4]; });
+    sh.getRange(start, 1, rows.length, 16).setValues(rows);
 
     return out({ ok: true, orderId: orderId });
   } catch (err) {
