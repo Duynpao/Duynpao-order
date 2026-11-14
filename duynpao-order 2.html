@@ -80,9 +80,15 @@
       <div class="note">Phí ship 15.000-25.000đ tuỳ khoảng cách thực tế. Miễn phí ship nếu đơn từ 200.000đ và dưới 3km.</div>
     </div>
 
+    <label class="field">Tên người nhận</label>
+    <input type="text" id="custName" placeholder="Tên của bạn">
+
     <label class="field">Số điện thoại</label>
     <input type="tel" id="phone" placeholder="09xxxxxxxx">
     <div class="err" id="phoneErr">Nhập số điện thoại để shop liên hệ xác nhận đơn.</div>
+
+    <label class="field">Ghi chú (giờ nhận, yêu cầu thêm)</label>
+    <input type="text" id="orderNote" placeholder="VD: 16h lấy bánh">
   </div>
 
   <div class="card" id="summaryCard">
@@ -107,7 +113,7 @@
 
 <script>
 const products = [
-  {id:'SP001', name:'Bánh bao thịt 1 trứng', price:40000, unit:'hộp 4 chiếc'},
+  {id:'SP001', name:'Bánh bao thịt 1 trứng', price:48000, unit:'hộp 4 chiếc'},
   {id:'SP002', name:'Bánh bao đậu dừa', price:40000, unit:'hộp 4 chiếc'},
   {id:'SP003', name:'Bánh bao xúc xích phomai', price:60000, unit:'hộp 4 chiếc'},
   {id:'SP004', name:'Bánh bao cốm dừa', price:60000, unit:'hộp 4 chiếc'},
@@ -125,7 +131,7 @@ const products = [
 ];
 
 // Dán link Web App của Google Apps Script vào đây (kết thúc bằng /exec).
-const SHEET_URL = '';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbynif0ObzHor3uW2gMpBHTNiJ7W9DswN7buDOBLSCL2KYhUB7kN9Z0JVdF-zCePCDhHUA/exec';
 
 let cart = {};
 let mode = 'pickup';
@@ -239,7 +245,11 @@ function placeOrder(){
     lines.push('Nhận hàng: Giao tận nơi - ' + (document.getElementById('address').value || '(chưa nhập địa chỉ)'));
   }
   lines.push('Tổng cộng: ' + document.getElementById('grandTotal').textContent);
+  const custName = document.getElementById('custName').value.trim();
+  const orderNote = document.getElementById('orderNote').value.trim();
+  if(custName) lines.push('Tên: ' + custName);
   lines.push('SĐT: ' + phone);
+  if(orderNote) lines.push('Ghi chú: ' + orderNote);
 
   const msg = encodeURIComponent(lines.join('\n'));
   const goZalo = () => { window.location.href = 'https://zalo.me/0975392409?text=' + msg; };
@@ -247,8 +257,11 @@ function placeOrder(){
   if(!SHEET_URL){ goZalo(); return; }
 
   const order = {
+    name: custName,
     phone: phone,
+    note: orderNote,
     mode: mode,
+    distance: document.getElementById('distance').value,
     place: mode==='pickup' ? document.getElementById('pickupPoint').value
                            : (document.getElementById('address').value || ''),
     ship: mode==='delivery' ? currentShip : 0,
