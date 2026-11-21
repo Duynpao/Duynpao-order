@@ -30,19 +30,19 @@ def place(bg, size, xy, f):
     a = art.resize(size, Image.LANCZOS)
     bg.paste(a, xy, feather(size, f))
 
-# Máy tính 2560x1440: ảnh ở giữa-trái, QR góc phải dưới trên nền kem
+# Máy tính 2560x1440: ảnh ở giữa-trái, QR bên trái trên nền kem
 W, H = 2560, 1440
 img = Image.new("RGB", (W, H), CREAM)
-place(img, (1440, 1440), (380, 0), 90)
+place(img, (1440, 1440), (W - 1440 - 380, 0), 90)
 qs = 460; cw = qs + 2*int(qs*0.07); ch = qs + 2*int(qs*0.07) + int(qs*0.13)
-qr_card(img, W - cw - 70, H - ch - 120, qs)
+qr_card(img, 70, H - ch - 220, qs)
 img.save(os.path.join(HERE, "hinh-nen-anh-may-tinh.png"))
 
-# Điện thoại 1170x2532: ảnh ở giữa, QR góc phải dưới
+# Điện thoại 1170x2532: ảnh ở giữa, QR bên trái
 W, H = 1170, 2532
 img = Image.new("RGB", (W, H), CREAM)
 place(img, (1270, 1270), (-50, 330), 80)
 qs = 440; cw = qs + 2*int(qs*0.07); ch = qs + 2*int(qs*0.07) + int(qs*0.13)
-qr_card(img, W - cw - 60, H - ch - 260, qs)
+qr_card(img, 60, H - ch - 370, qs)
 img.save(os.path.join(HERE, "hinh-nen-anh-dien-thoai.png"))
 print("xong")
