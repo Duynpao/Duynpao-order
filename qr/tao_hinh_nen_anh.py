@@ -41,8 +41,8 @@ img.save(os.path.join(HERE, "hinh-nen-anh-may-tinh.png"))
 # Điện thoại 1170x2532: ảnh ở giữa, QR bên trái
 W, H = 1170, 2532
 img = Image.new("RGB", (W, H), CREAM)
-place(img, (1270, 1270), (-50, 330), 80)
+place(img, (1120, 1120), (25, 230), 70)
 qs = 440; cw = qs + 2*int(qs*0.07); ch = qs + 2*int(qs*0.07) + int(qs*0.13)
-qr_card(img, 60, H - ch - 370, qs)
+qr_card(img, 60, 1370, qs)
 img.save(os.path.join(HERE, "hinh-nen-anh-dien-thoai.png"))
 print("xong")
