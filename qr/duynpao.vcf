@@ -2,14 +2,15 @@ BEGIN:VCARD
 VERSION:3.0
 N:;Duynpao;;;
 FN:Duynpao - Bánh bao
-ORG:Duynpao
 TEL;TYPE=CELL:0975392409
 TEL;TYPE=CELL:0925983535
 URL:https://zalo.me/0975392409
-item1.URL:https://www.facebook.com/oduyen.412635
+item1.URL:https://facebook.com/oduyen.412635
 item1.X-ABLabel:Facebook
-item2.URL:https://www.facebook.com/duynpao
+item2.URL:https://facebook.com/duynpao
 item2.X-ABLabel:Fanpage
 item3.URL:https://drive.google.com/file/d/18yF7zXvWLI34RQ8Q5gWO359D9-DyRhZ0/view
 item3.X-ABLabel:Catalog
+item4.URL:https://tiktok.com/@duynpao10
+item4.X-ABLabel:TikTok
 END:VCARD

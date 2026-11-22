@@ -42,7 +42,7 @@ img.save(os.path.join(HERE, "hinh-nen-anh-may-tinh.png"))
 W, H = 1170, 2532
 img = Image.new("RGB", (W, H), CREAM)
 place(img, (1120, 1120), (25, 230), 70)
-qs = 440; cw = qs + 2*int(qs*0.07); ch = qs + 2*int(qs*0.07) + int(qs*0.13)
+qs = 510; cw = qs + 2*int(qs*0.07); ch = qs + 2*int(qs*0.07) + int(qs*0.13)
 qr_card(img, 60, 1370, qs)
 img.save(os.path.join(HERE, "hinh-nen-anh-dien-thoai.png"))
 print("xong")
