@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{ --red:#c0392b; --red-dark:#8e2a1f; --cream:#faf6f1; --cream2:#f3e9dc; --ink:#2b2320; --muted:#7a6a60; --gold:#d9a441; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{width:1640px;height:624px;overflow:hidden;}
+  body{font-family:"Be Vietnam Pro",sans-serif;color:var(--ink);
+    background:radial-gradient(ellipse 60% 90% at 50% 45%, #fffdf9 0%, var(--cream) 55%, var(--cream2) 100%);
+    position:relative;}
+  /* subtle pattern */
+  .pattern{position:absolute;inset:0;opacity:.07;
+    background-image:radial-gradient(var(--red) 1.6px, transparent 1.8px);background-size:28px 28px;}
+  .band{position:absolute;left:0;right:0;height:14px;background:var(--red);}
+  .band.top{top:0}
+  .band.bot{bottom:0}
+  .band::after{content:"";position:absolute;left:0;right:0;height:3px;background:var(--gold);}
+  .band.top::after{bottom:-6px}
+  .band.bot::after{top:-6px}
+
+  .center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:820px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:14px;font-weight:600;letter-spacing:4px;font-size:19px;color:var(--red-dark);text-transform:uppercase;}
+  .eyebrow i{display:block;width:46px;height:2px;background:var(--gold);}
+  h1{font-family:"Playfair Display",serif;font-weight:900;font-size:124px;line-height:1;color:var(--red);letter-spacing:6px;margin:14px 0 6px;
+    text-shadow:0 4px 0 rgba(142,42,31,.12);}
+  .tag{font-family:"Playfair Display",serif;font-style:italic;font-weight:700;font-size:36px;color:var(--red-dark);}
+  .sub{margin-top:16px;font-size:19px;color:var(--muted);font-weight:500;}
+  .pills{margin-top:26px;display:flex;gap:14px;justify-content:center;}
+  .pill{background:var(--red);color:#fff;border-radius:40px;padding:12px 26px;font-weight:700;font-size:20px;letter-spacing:.3px;
+    box-shadow:0 6px 16px rgba(142,42,31,.22);}
+  .pill.ghost{background:#fff;color:var(--red-dark);border:2px solid var(--red);box-shadow:none;}
+
+  .art{position:absolute;}
+  .steam path{fill:none;stroke:#c9b8a8;stroke-width:5;stroke-linecap:round;opacity:.7;}
+</style>
+</head>
+<body>
+<div class="pattern"></div>
+<div class="band top"></div>
+<div class="band bot"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <radialGradient id="dough" cx="45%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".6" stop-color="#fbf4ea"/>
+      <stop offset="1" stop-color="#e9dccb"/>
+    </radialGradient>
+    <radialGradient id="doughPink" cx="45%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#fff6f3"/>
+      <stop offset=".6" stop-color="#f8dcd3"/>
+      <stop offset="1" stop-color="#e8bfb2"/>
+    </radialGradient>
+    <radialGradient id="doughGreen" cx="45%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#f7fbef"/>
+      <stop offset=".6" stop-color="#dfeccb"/>
+      <stop offset="1" stop-color="#c2d6a6"/>
+    </radialGradient>
+    <linearGradient id="bamboo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e2b877"/>
+      <stop offset="1" stop-color="#b9894a"/>
+    </linearGradient>
+    <!-- one bun, centered at 0,0, ~200 wide -->
+    <g id="bun">
+      <ellipse cx="0" cy="62" rx="96" ry="14" fill="#000" opacity=".10"/>
+      <path d="M-98 40 C-104 -10 -60 -72 0 -76 C60 -72 104 -10 98 40 C80 66 -80 66 -98 40 Z" fill="url(#dough)" stroke="#e2d3c0" stroke-width="2"/>
+      <!-- pleats -->
+      <g fill="none" stroke="#dcc9b3" stroke-width="3" stroke-linecap="round">
+        <path d="M0 -70 C-8 -50 -26 -38 -46 -30"/>
+        <path d="M0 -70 C10 -50 28 -40 48 -32"/>
+        <path d="M0 -70 C-2 -48 -6 -32 -16 -16"/>
+        <path d="M0 -70 C4 -50 10 -32 20 -18"/>
+        <path d="M0 -70 C-18 -56 -44 -52 -66 -50"/>
+        <path d="M0 -70 C18 -56 44 -52 66 -50"/>
+      </g>
+      <circle cx="0" cy="-70" r="6" fill="#ead9c4"/>
+      <ellipse cx="-44" cy="-20" rx="20" ry="10" fill="#fff" opacity=".7" transform="rotate(-25 -44 -20)"/>
+    </g>
+    <g id="bunPink">
+      <ellipse cx="0" cy="62" rx="96" ry="14" fill="#000" opacity=".10"/>
+      <path d="M-98 40 C-104 -10 -60 -72 0 -76 C60 -72 104 -10 98 40 C80 66 -80 66 -98 40 Z" fill="url(#doughPink)" stroke="#e5c3b8" stroke-width="2"/>
+      <g fill="none" stroke="#dfb0a2" stroke-width="3" stroke-linecap="round">
+        <path d="M0 -70 C-8 -50 -26 -38 -46 -30"/><path d="M0 -70 C10 -50 28 -40 48 -32"/>
+        <path d="M0 -70 C-18 -56 -44 -52 -66 -50"/><path d="M0 -70 C18 -56 44 -52 66 -50"/>
+      </g>
+      <circle cx="0" cy="-70" r="6" fill="#e9b9ab"/>
+      <ellipse cx="-44" cy="-20" rx="20" ry="10" fill="#fff" opacity=".7" transform="rotate(-25 -44 -20)"/>
+    </g>
+    <g id="bunGreen">
+      <ellipse cx="0" cy="62" rx="96" ry="14" fill="#000" opacity=".10"/>
+      <path d="M-98 40 C-104 -10 -60 -72 0 -76 C60 -72 104 -10 98 40 C80 66 -80 66 -98 40 Z" fill="url(#doughGreen)" stroke="#c9d9b2" stroke-width="2"/>
+      <g fill="none" stroke="#b5c995" stroke-width="3" stroke-linecap="round">
+        <path d="M0 -70 C-8 -50 -26 -38 -46 -30"/><path d="M0 -70 C10 -50 28 -40 48 -32"/>
+        <path d="M0 -70 C-18 -56 -44 -52 -66 -50"/><path d="M0 -70 C18 -56 44 -52 66 -50"/>
+      </g>
+      <circle cx="0" cy="-70" r="6" fill="#bcd09c"/>
+      <ellipse cx="-44" cy="-20" rx="20" ry="10" fill="#fff" opacity=".7" transform="rotate(-25 -44 -20)"/>
+    </g>
+    <!-- cut-open bun showing filling -->
+    <g id="bunCut">
+      <ellipse cx="0" cy="58" rx="96" ry="14" fill="#000" opacity=".10"/>
+      <path d="M-96 20 C-100 60 100 60 96 20 Z" fill="url(#dough)" stroke="#e2d3c0" stroke-width="2"/>
+      <ellipse cx="0" cy="20" rx="96" ry="32" fill="#fbf3e7" stroke="#e2d3c0" stroke-width="2"/>
+      <ellipse cx="0" cy="22" rx="62" ry="20" fill="#a0522d"/>
+      <ellipse cx="-12" cy="18" rx="22" ry="14" fill="#fff6dc"/>
+      <ellipse cx="-12" cy="18" rx="11" ry="8" fill="#f2b632"/>
+      <circle cx="28" cy="14" r="5" fill="#6b3a1f"/><circle cx="22" cy="30" r="4" fill="#7a4524"/>
+      <circle cx="38" cy="26" r="4" fill="#3d6b2f"/><circle cx="-40" cy="28" r="4" fill="#3d6b2f"/>
+    </g>
+    <g id="steamer">
+      <ellipse cx="0" cy="70" rx="200" ry="22" fill="#000" opacity=".12"/>
+      <path d="M-200 0 L-200 50 C-200 76 200 76 200 50 L200 0 Z" fill="url(#bamboo)"/>
+      <ellipse cx="0" cy="0" rx="200" ry="40" fill="#c99859"/>
+      <ellipse cx="0" cy="0" rx="182" ry="32" fill="#f4ead8"/>
+      <g stroke="#a87638" stroke-width="2" opacity=".55">
+        <line x1="-200" y1="22" x2="200" y2="22"/><line x1="-198" y1="42" x2="198" y2="42"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<!-- LEFT: steamer with buns -->
+<svg class="art" style="left:20px;top:250px" width="330" height="300" viewBox="-220 -230 440 400">
+  <g class="steam">
+    <path d="M-70 -150 C-90 -180 -50 -195 -70 -225"/>
+    <path d="M0 -160 C-20 -190 20 -205 0 -230"/>
+    <path d="M70 -150 C50 -180 90 -195 70 -225"/>
+  </g>
+  <use href="#steamer" y="40"/>
+  <use href="#bun" transform="translate(-95 -10) scale(.78)"/>
+  <use href="#bunPink" transform="translate(95 -10) scale(.78)"/>
+  <use href="#bun" transform="translate(0 -40) scale(.88)"/>
+</svg>
+
+<!-- RIGHT: buns cluster -->
+<svg class="art" style="right:20px;top:255px" width="345" height="285" viewBox="-230 -200 460 380">
+  <g class="steam">
+    <path d="M-40 -110 C-60 -140 -20 -155 -40 -185"/>
+    <path d="M60 -100 C40 -130 80 -145 60 -175"/>
+  </g>
+  <use href="#bunGreen" transform="translate(-110 40) scale(.8)"/>
+  <use href="#bunCut" transform="translate(115 70) scale(.92)"/>
+  <use href="#bun" transform="translate(0 -10) scale(1)"/>
+</svg>
+
+<div class="center">
+  <div class="eyebrow"><i></i>Cơ sở sản xuất bánh bao tươi<i></i></div>
+  <h1>DUYNPAO</h1>
+  <div class="tag">Bánh bao nóng hổi – làm mới mỗi ngày</div>
+  <div class="sub">Thịt trứng · Phomai · Cốm dừa · Bánh bao chay · Yên Mô, Ninh Bình</div>
+  <div class="pills">
+    <div class="pill">Đặt bánh: 0975 392 409</div>
+    <div class="pill ghost">Nhận sỉ &amp; lẻ · Giao tận nơi</div>
+  </div>
+</div>
+</body>
+</html>
